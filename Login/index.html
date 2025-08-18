@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Complex Login</title>
+  <!-- Font for clean UI -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- App styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Animated background canvas -->
+  <canvas id="bg"></canvas>
+
+  <!-- Soft radial glow layers -->
+  <div class="radial-glow" aria-hidden="true"></div>
+
+  <main class="stage">
+    <!-- Perspective wrapper for 3D tilt/parallax -->
+    <section class="card-wrap" aria-labelledby="title">
+      <!-- Main login/signup card -->
+      <div class="card" id="card" tabindex="0" aria-live="polite">
+        <!-- Decorative window chrome dots + title -->
+        <div class="top-chrome" aria-hidden="true">
+          <div class="dot red"></div>
+          <div class="dot amber"></div>
+          <div class="dot green"></div>
+          <span class="chrome-title">Secure Portal</span>
+        </div>
+
+        <!-- Flip container: front = Login, back = Sign up -->
+        <div class="flip" id="flip">
+          <!-- FRONT: LOGIN -->
+          <div class="face front" aria-labelledby="loginTitle" aria-hidden="false">
+            <div class="hero compact">
+              <h1 id="loginTitle">Welcome Back</h1>
+              <p class="subtitle">Sign in to continue</p>
+              <!-- Note: Removed SVG divider by request -->
+            </div>
+
+            <!--
+              DUMMY CREDENTIALS (for testing):
+              - demo / SuperSecret!123
+              - neo / ThereIsNoSpoon_42
+              - admin / P@ssw0rd!P@ssw0rd!
+            -->
+
+            <!-- Login form -->
+            <form id="loginForm" novalidate autocomplete="off" role="form" aria-describedby="loginHelp">
+              <!-- Username -->
+              <div class="field">
+                <input id="username" name="username" type="text" required />
+                <label for="username">Username</label>
+                <div class="underline"></div>
+                <span id="loginHelp" class="hint">Use your handle (no spaces)</span>
+              </div>
+
+              <!-- Password -->
+              <div class="field password">
+                <input id="password" name="password" type="password" required />
+                <label for="password">Password</label>
+                <!-- Password visibility toggle -->
+                <button class="toggle" type="button" aria-label="Toggle password visibility"></button>
+                <div class="underline"></div>
+                <div class="meter" aria-hidden="true"><span></span></div>
+                <span class="hint">At least 8 characters, mix of types</span>
+              </div>
+
+              <div class="row">
+                <!-- Remember me switch -->
+                <label class="switch">
+                  <input id="remember" type="checkbox" />
+                  <span class="slider"></span>
+                  <span class="switch-label">Remember me</span>
+                </label>
+
+                <!-- Themed links (no default blue) -->
+                <div class="links">
+                  <button class="link themic" type="button" id="forgotBtn" aria-haspopup="dialog" aria-controls="forgotModal">Forgot password?</button>
+                  <button class="link themic" type="button" id="toSignup" aria-controls="flip">Create account</button>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="actions">
+                <button id="submitBtn" class="btn primary" type="submit">
+                  <span class="btn-label">Sign in</span>
+                  <span class="ink"></span>
+                </button>
+                <button id="checkBtn" class="btn ghost" type="button">Check account</button>
+              </div>
+
+              <!-- Toast banner for caps lock + status -->
+              <div class="toast" id="capsToast" role="status" aria-live="polite">Caps Lock is on</div>
+              <!-- Screen reader live region -->
+              <div id="live-region" class="sr-only" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <!-- BACK: SIGN UP (Demo only; does not store accounts) -->
+          <div class="face back" aria-labelledby="signupTitle" aria-hidden="true">
+            <div class="hero compact">
+              <h1 id="signupTitle">Create Account</h1>
+              <p class="subtitle">Join the portal</p>
+            </div>
+
+            <form id="signupForm" novalidate autocomplete="off" role="form" aria-describedby="signupHelp">
+              <!-- Email -->
+              <div class="field">
+                <input id="su_email" name="email" type="email" required />
+                <label for="su_email">Email</label>
+                <div class="underline"></div>
+                <span class="hint">We’ll send notifications here</span>
+              </div>
+
+              <!-- Username -->
+              <div class="field">
+                <input id="su_username" name="username" type="text" required />
+                <label for="su_username">Username</label>
+                <div class="underline"></div>
+                <span id="signupHelp" class="hint">3–16 letters/numbers/underscores</span>
+              </div>
+
+              <!-- Password -->
+              <div class="field password">
+                <input id="su_password" name="password" type="password" required />
+                <label for="su_password">Password</label>
+                <button class="toggle" type="button" aria-label="Toggle password visibility"></button>
+                <div class="underline"></div>
+                <div class="meter" aria-hidden="true"><span></span></div>
+                <span class="hint">Use at least 8 characters, mix types</span>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="field">
+                <input id="su_confirm" name="confirm" type="password" required />
+                <label for="su_confirm">Confirm password</label>
+                <div class="underline"></div>
+                <span class="hint" id="su_match_hint">Must match password</span>
+              </div>
+
+              <div class="actions wrap">
+                <button id="signupBtn" class="btn primary" type="submit">
+                  <span class="btn-label">Sign up</span>
+                  <span class="ink"></span>
+                </button>
+                <button id="toLogin" class="btn ghost" type="button">Back to login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative parallax layers -->
+      <div class="parallax layer l1" aria-hidden="true"></div>
+      <div class="parallax layer l2" aria-hidden="true"></div>
+      <div class="parallax layer l3" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <!-- Simple modal for forgot password (demo only) -->
+  <dialog id="forgotModal" aria-labelledby="forgotTitle">
+    <div class="modal">
+      <h2 id="forgotTitle">Reset password</h2>
+      <p>For this demo, password reset is not connected. Try username: demo, password: SuperSecret!123</p>
+      <div class="modal-actions">
+        <button class="btn" id="closeForgot">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Confetti layer -->
+  <div class="confetti" aria-hidden="true"></div>
+
+  <!-- App logic -->
+  <script src="script.js"></script>
+</body>
+</html>
