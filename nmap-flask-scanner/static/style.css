@@ -1,0 +1,95 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #24243e 0%, #302b63 55%, #0f0c29 100%);
+  --card-bg: rgba(34, 40, 49, 0.96);
+  --primary: #ff5370;
+  --primary-hover: #ff869a;
+  --button-radius: 8px;
+  --shadow: 0 8px 24px rgba(40, 40, 60, 0.16);
+  --border: 1px solid #393e46;
+  --input-bg: #232136;
+  --text-main: #eee;
+  --text-muted: #bdbdd7;
+  --mono: "Roboto Mono", "Consolas", "Liberation Mono", monospace;
+  --sans: "Segoe UI", "Roboto", Arial, sans-serif;
+}
+
+body {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 2rem 2.5rem;
+  max-width: 500px;
+  width: 96vw;
+  margin: 2rem auto;
+  border: var(--border);
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  letter-spacing: -1px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--primary), #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.info-text {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-size: 1.07rem;
+}
+
+form {
+  margin-bottom: 1.8rem;
+}
+
+.btn {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: var(--button-radius);
+  font-size: 1.04rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0.4rem 0.7rem rgba(40, 40, 60, 0.07);
+  outline: none;
+}
+
+.btn:hover,
+.btn:focus {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.scan-result {
+  background: var(--input-bg);
+  border-radius: 12px;
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: #f7f7fa;
+  white-space: pre-wrap;
+  line-height: 1.55;
+  overflow-x: auto;
+  box-shadow: var(--shadow);
+  border: 1px solid #21213b;
+}
+
+.scan-result:empty {
+  display: none;
+}

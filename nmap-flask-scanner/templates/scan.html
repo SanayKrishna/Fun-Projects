@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web Nmap Scanner</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="container">
+    <h1>Nmap Scanner</h1>
+    <p class="info-text">
+      Run a local network scan on your computer.<br />
+      Click the button below to scan
+      <b style="color: #ff5370">127.0.0.1</b>.
+    </p>
+    <form method="POST" id="scanForm">
+      <button type="submit" class="btn" id="scanBtn">Start Scan</button>
+    </form>
+
+    {% if scan_output %}
+    <div class="scan-result" id="result">{{ scan_output | safe }}</div>
+    {% else %}
+    <div class="scan-result" id="result"></div>
+    {% endif %}
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
