@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Gen AI - Glassmorphism UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated Aurora Background -->
+    <div class="background-aurora">
+        <div class="aurora-shape shape1"></div>
+        <div class="aurora-shape shape2"></div>
+        <div class="aurora-shape shape3"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- CONTROLS PANEL -->
+        <div id="controls-panel" class="panel">
+            <div class="panel-header">
+                <i class="fas fa-brain fa-lg"></i>
+                <h1 class="panel-title">MindForge</h1>
+            </div>
+
+            <!-- UPLOAD -->
+            <div class="panel-section">
+                <label class="section-label">1. Upload PDF</label>
+                <div id="drop-zone" class="drop-zone">
+                    <div id="drop-zone-prompt" class="drop-zone-prompt">
+                        <i class="fas fa-file-pdf fa-2x"></i>
+                        <p><strong>Click to upload</strong> or drag and drop</p>
+                        <p class="text-xs">PDF files only</p>
+                    </div>
+                    <div id="file-processing-loader" class="placeholder hidden">
+                        <div class="loader-spinner-small"></div>
+                        <p class="mt-2 text-sm text-slate-400">Processing PDF...</p>
+                    </div>
+                    <input type="file" id="file-input" class="hidden" accept=".pdf">
+                </div>
+                <p id="file-name" class="file-name-text"></p>
+            </div>
+
+            <!-- CONFIGURE -->
+            <div id="config-options" class="hidden">
+                <div class="panel-section">
+                    <label class="section-label">2. Content Type</label>
+                    <div class="button-group">
+                        <button id="btn-notes" class="content-type-btn active">Generate Notes</button>
+                        <button id="btn-questions" class="content-type-btn">Create Questions</button>
+                    </div>
+                </div>
+
+                <!-- Note Options -->
+                <div id="notes-options-container" class="panel-section">
+                    <label class="section-label" for="output-format">Note Format</label>
+                    <select id="output-format" class="select-input">
+                        <option value="Key Points">Key Points</option>
+                        <option value="Detailed Summary">Detailed Summary</option>
+                    </select>
+                </div>
+
+                <!-- Question Options -->
+                <div id="questions-options-container" class="hidden">
+                    <div class="panel-section">
+                        <label class="section-label" for="question-type">Question Type</label>
+                        <select id="question-type" class="select-input">
+                            <option value="Short Answer">Short Answer</option>
+                            <option value="Long Answer">Long Answer</option>
+                            <option value="Fill in the Blanks">Fill in the Blanks</option>
+                            <option value="Mixed Types">Mixed Types</option>
+                        </select>
+                    </div>
+                    <div class="panel-section">
+                        <label class="section-label" for="num-questions">Number of Questions</label>
+                        <input type="number" id="num-questions" class="select-input" value="5" min="1" max="20">
+                    </div>
+                    <div class="panel-section">
+                        <label class="section-label" for="difficulty-level">Difficulty Level</label>
+                        <select id="difficulty-level" class="select-input">
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GENERATE -->
+            <div class="mt-auto">
+                <button id="generate-btn" class="generate-button" disabled>
+                    <i class="fas fa-sparkles"></i>
+                    <span>Generate</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- OUTPUT PANEL -->
+        <div id="output-panel" class="panel">
+            <div id="placeholder" class="placeholder">
+                <i class="fas fa-book-open fa-3x text-slate-500"></i>
+                <h2 class="text-xl font-semibold mt-4">Your Study Material Will Appear Here</h2>
+                <p class="mt-2 text-sm">Upload a file to begin the magic.</p>
+            </div>
+            <div id="loader" class="placeholder hidden">
+                 <div class="loader-spinner"></div>
+                 <h2 class="text-xl font-semibold mt-4">Generating...</h2>
+                 <p class="mt-2 text-sm">The AI is analyzing your document.</p>
+            </div>
+            <div id="output-content" class="output-content custom-scrollbar hidden">
+                <!-- AI Generated content goes here -->
+            </div>
+            <div id="action-buttons" class="hidden">
+                 <button id="copy-btn" class="action-btn">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+                <button id="download-btn" class="action-btn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Your custom script file -->
+    <script src="script.js"></script>
+</body>
+</html>

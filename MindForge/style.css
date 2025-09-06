@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Base Setup & Theme --- */
+:root {
+    --bg-color: #030712;
+    --panel-bg: rgba(17, 24, 39, 0.85); /* Increased opacity for sticky elements */
+    --panel-border: rgba(55, 65, 81, 0.5);
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --accent-color: #8b5cf6;
+    --accent-hover: #a78bfa;
+    --error-color: #f87171;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+/* --- Animated Aurora Background --- */
+.background-aurora {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    filter: blur(100px);
+    opacity: 0.7;
+}
+.aurora-shape { position: absolute; border-radius: 50%; }
+.shape1 { width: 500px; height: 500px; background-color: #7c3aed; top: -150px; left: -150px; animation: move1 20s infinite alternate ease-in-out; }
+.shape2 { width: 400px; height: 400px; background-color: #3b82f6; bottom: -100px; right: -100px; animation: move2 25s infinite alternate ease-in-out; }
+.shape3 { width: 300px; height: 300px; background-color: #ec4899; bottom: 50%; right: 50%; animation: move3 15s infinite alternate ease-in-out; }
+@keyframes move1 { to { transform: translate(100px, 200px); } }
+@keyframes move2 { to { transform: translate(-200px, -150px) rotate(90deg); } }
+@keyframes move3 { to { transform: translate(200px, -100px); } }
+
+/* --- Main Layout --- */
+.main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; /* push content to top */
+    justify-content: center;
+    padding: 2rem;
+    gap: 1.5rem;
+    height: auto; /* remove forced 100vh */
+}
+
+
+/* --- Glassmorphism Panel Style --- */
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 1.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    animation: fadeInUp 0.8s ease-out forwards;
+    overflow: hidden;
+    /* CORRECTED: Set a max-height to prevent panels from touching screen edges */
+    max-height: calc(100vh - 2rem); /* 100% viewport height minus vertical padding */
+}
+
+#controls-panel {
+    width: 100%;
+    animation-delay: 0.2s;
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding: 0;
+}
+
+#output-panel {
+    width: 100%;
+    animation-delay: 0.4s;
+    flex-grow: 1;
+    padding: 1.5rem;
+}
+
+/* --- Panel Content --- */
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--accent-hover);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0; 
+    background: var(--panel-bg);
+    z-index: 20;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--panel-border);
+}
+.panel-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.panel-section { 
+    margin-bottom: 1.5rem; 
+    flex-shrink: 0;
+    padding: 0 1.5rem;
+}
+.panel-header + .panel-section {
+    margin-top: 1.5rem;
+}
+
+/* --- Interactive Elements --- */
+.drop-zone {
+    border: 2px dashed var(--panel-border);
+    border-radius: 1rem;
+    text-align: center;
+    padding: 1.5rem;
+    min-height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--accent-color);
+    background-color: rgba(139, 92, 246, 0.1);
+    transform: scale(1.02);
+}
+.drop-zone-prompt .fas { color: var(--accent-color); }
+.drop-zone-prompt p { color: var(--text-secondary); }
+.drop-zone-prompt p strong { color: var(--accent-hover); }
+.file-name-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 1.5rem;
+}
+.select-input, .content-type-btn, .action-btn {
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.select-input {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: rgba(3, 7, 18, 0.5);
+    border: 1px solid var(--panel-border);
+    color: var(--text-primary);
+}
+.select-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.button-group { display: flex; gap: 0.5rem; }
+.content-type-btn {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--panel-border);
+    background-color: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+.content-type-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+}
+
+.mt-auto {
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    padding: 1.5rem; 
+    background: var(--panel-bg);
+    border-top: 1px solid var(--panel-border);
+}
+.generate-button {
+    width: 100%;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+}
+.generate-button:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+}
+.generate-button:disabled {
+    background-color: #374151;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* --- Output Panel --- */
+.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--text-secondary);
+}
+.placeholder .fas { color: #4b5563; }
+.loader-spinner, .loader-spinner-small {
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+    border: 5px solid var(--panel-border);
+    border-bottom-color: var(--accent-color);
+}
+.loader-spinner { width: 48px; height: 48px; }
+.loader-spinner-small { width: 24px; height: 24px; border-width: 3px; }
+
+@keyframes rotation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.output-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* --- Custom Scrollbar styles --- */
+.custom-scrollbar::-webkit-scrollbar, #controls-panel::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track, #controls-panel::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb, #controls-panel::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 3px; }
+
+/* --- Action Buttons (Copy/Download) --- */
+#action-buttons {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    margin-top: auto;
+    border-top: 1px solid var(--panel-border);
+}
+.action-btn {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--panel-border);
+    padding: 0.75rem;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+.action-btn:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.error-box {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    background-color: rgba(248, 113, 113, 0.1);
+    color: var(--error-color);
+    border-radius: 0.75rem;
+}
+
+/* --- Entry Animation --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Helper Classes */
+.hidden { display: none !important; }
+.mt-2 { margin-top: 0.5rem; }
+.text-xs { font-size: 0.75rem; }
+.text-xl { font-size: 1.25rem; }
+.font-semibold { font-weight: 600; }
+
+/* --- Responsive Layout for Desktop --- */
+@media (min-width: 768px) {
+    .main-container {
+        flex-direction: row;
+        align-items: center; /* This centers the panels */
+    }
+    #controls-panel, #output-panel {
+        /* Set a max height so they don't touch the edges */
+        max-height: calc(100vh - 4rem); 
+    }
+    #controls-panel {
+        width: 35%;
+        max-width: 450px;
+    }
+    #output-panel {
+        width: 65%;
+    }
+}
+
