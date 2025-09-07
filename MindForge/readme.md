@@ -49,3 +49,4 @@ Got an idea, suggestion, or feature request? Share it and help shape the future 
 📜 License
 
 MindForge is free to use and open for everyone.
+
